@@ -6,23 +6,19 @@ public class PlayerController : MonoBehaviour
 {
  public Animator animator;
 
+ public float speed;
+
+
  private void Awake() {
     Debug.Log("Player Controller Awake");
  }
 
   private void Update() {
-    float speed = Input.GetAxisRaw("Horizontal");
+    float horizontal = Input.GetAxisRaw("Horizontal");
     float VerticalInput = Input.GetAxis("Vertical");	
 
-    animator.SetFloat("Speed",Mathf.Abs(speed));  
-    Vector3 scale = transform.localScale;
-
-    if(speed<0){
-        scale.x=-1f *Mathf.Abs(scale.x);
-    }else if(speed>0){
-        scale.x=Mathf.Abs(scale.x);
-    }
-    transform.localScale=scale;
+    MoveCharacter(horizontal);
+    PlayMovementAnimation(horizontal);
 
      JumpAnimation(VerticalInput);  
 
@@ -34,6 +30,25 @@ public class PlayerController : MonoBehaviour
     {
         Crouch(false);
     }   
+ }
+
+ private void MoveCharacter(float horizontal){
+    Vector3 position = transform.position;
+    // (Speed = distance/time)*(1/Frames per second say 30)
+    position.x+=horizontal*speed*Time.deltaTime;
+    transform.position=position;
+ }
+
+ private void PlayMovementAnimation(float horizontal){
+        animator.SetFloat("Speed",Mathf.Abs(horizontal));  
+    Vector3 scale = transform.localScale;
+
+    if(horizontal<0){
+        scale.x=-1f *Mathf.Abs(scale.x);
+    }else if(horizontal>0){
+        scale.x=Mathf.Abs(scale.x);
+    }
+    transform.localScale=scale;
  }
 
  public void Crouch(bool crouch)
