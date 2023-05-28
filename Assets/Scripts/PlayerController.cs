@@ -7,20 +7,21 @@ public class PlayerController : MonoBehaviour
  public Animator animator;
 
  public float speed;
+ public float jump;
+ private Rigidbody2D rb2d;
 
 
  private void Awake() {
     Debug.Log("Player Controller Awake");
+    rb2d = gameObject.GetComponent<Rigidbody2D>();
  }
 
   private void Update() {
     float horizontal = Input.GetAxisRaw("Horizontal");
-    float VerticalInput = Input.GetAxis("Vertical");	
+    float vertical = Input.GetAxisRaw("Jump");	
 
-    MoveCharacter(horizontal);
-    PlayMovementAnimation(horizontal);
-
-     JumpAnimation(VerticalInput);  
+    MoveCharacter(horizontal, vertical);
+    PlayMovementAnimation(horizontal,vertical); 
 
     if (Input.GetKey(KeyCode.LeftControl))
     {
@@ -32,15 +33,21 @@ public class PlayerController : MonoBehaviour
     }   
  }
 
- private void MoveCharacter(float horizontal){
+ private void MoveCharacter(float horizontal, float vertical){
+    //move character horizontally
     Vector3 position = transform.position;
     // (Speed = distance/time)*(1/Frames per second say 30)
     position.x+=horizontal*speed*Time.deltaTime;
     transform.position=position;
+
+    //move character horizontally
+    if(vertical>0){
+            rb2d.AddForce(new Vector2(0f, jump),ForceMode2D.Force);
+    }
  }
 
- private void PlayMovementAnimation(float horizontal){
-        animator.SetFloat("Speed",Mathf.Abs(horizontal));  
+ private void PlayMovementAnimation(float horizontal, float vertical){
+    animator.SetFloat("Speed",Mathf.Abs(horizontal));  
     Vector3 scale = transform.localScale;
 
     if(horizontal<0){
@@ -49,6 +56,14 @@ public class PlayerController : MonoBehaviour
         scale.x=Mathf.Abs(scale.x);
     }
     transform.localScale=scale;
+
+    //Jump  
+    if(vertical>0){
+        animator.SetBool("Jump",true);
+    }else{
+        animator.SetBool("Jump",false);
+    }
+
  }
 
  public void Crouch(bool crouch)
@@ -57,14 +72,4 @@ public class PlayerController : MonoBehaviour
     animator.SetBool("Crouch", crouch);
  }
 
-
- public void JumpAnimation(float vertical)
- {    
-    if (vertical > 0 )
-    {
-        animator.SetTrigger("Jump");            
-    }
- }
-
-  
 }
