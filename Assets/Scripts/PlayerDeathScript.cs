@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerDeathScript : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerDeathScript : MonoBehaviour
         {
             //Level is over
             Debug.Log("Oops, you are dead");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
