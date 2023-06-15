@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,7 +19,26 @@ public class PlayerController : MonoBehaviour
     rb2d = gameObject.GetComponent<Rigidbody2D>();
  }
 
-  private void Update() {
+    public void KillPlayer(bool death)
+    {
+        Debug.Log("Player killed by enemy");
+        /*Destroy(gameObject);*/
+
+        //Play death animation
+        animator.SetBool("Death", death);
+
+        //Reload Level
+        ReloadLevel();
+
+    }
+
+    public void ReloadLevel()
+    {
+        Debug.Log("Player Died");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void Update() {
     float horizontal = Input.GetAxisRaw("Horizontal");
     float vertical = Input.GetAxisRaw("Jump");	
 
