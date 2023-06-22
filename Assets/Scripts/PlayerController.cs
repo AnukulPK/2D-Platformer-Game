@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
  public ScoreController scoreController;
+ public GameOverController gameOverController;
  public Animator animator;
 
  public float speed;
@@ -25,17 +25,12 @@ public class PlayerController : MonoBehaviour
         /*Destroy(gameObject);*/
 
         //Play death animation
-        animator.SetBool("Death", death);
+        /*animator.SetBool("Death", death);*/
 
         //Reload Level
-        ReloadLevel();
+        gameOverController.PlayerDied();
+        this.enabled = false;
 
-    }
-
-    public void ReloadLevel()
-    {
-        Debug.Log("Player Died");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void Update() {
