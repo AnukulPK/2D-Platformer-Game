@@ -17,5 +17,5 @@ public class LobbyController : MonoBehaviour
     private void PlayGame()
     {
         SceneManager.LoadScene(1);
-    }
+     }
 }
