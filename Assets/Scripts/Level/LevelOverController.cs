@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelOverController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class LevelOverController : MonoBehaviour
         {
             //Level is over
             Debug.Log("Level Finished by the player!");
+            LevelManager.Instance.MarkCurrentLevelComplete();
+
         }
     }
 }
