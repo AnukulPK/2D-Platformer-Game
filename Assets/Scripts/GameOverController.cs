@@ -7,10 +7,13 @@ using UnityEngine.UI;
 public class GameOverController : MonoBehaviour
 {
     public Button buttonRestart;
+    public Button buttonLobby;
+    public GameObject LevelSelection;
 
     private void Awake()
     {
         buttonRestart.onClick.AddListener(ReloadLevel);
+        buttonLobby.onClick.AddListener(ActivateLevelSelection);
     }
     public void PlayerDied()
     {
@@ -21,5 +24,10 @@ public class GameOverController : MonoBehaviour
     {
         Debug.Log("Player Died");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void ActivateLevelSelection()
+    {
+        LevelSelection.SetActive(true);
     }
 }
