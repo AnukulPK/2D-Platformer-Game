@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
  public ScoreController scoreController;
  public GameOverController gameOverController;
  public Animator animator;
+ public ParticleSystem dust;
 
  public float speed;
  public float jump;
@@ -83,6 +84,7 @@ public class PlayerController : MonoBehaviour
     //Jump  
     if(vertical>0){
         animator.SetBool("Jump",true);
+        createDust();
     }else{
         animator.SetBool("Jump",false);
     }
@@ -93,6 +95,11 @@ public class PlayerController : MonoBehaviour
  {
           
     animator.SetBool("Crouch", crouch);
+ }
+
+ public void createDust()
+ {
+        dust.Play();
  }
 
 }
